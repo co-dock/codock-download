@@ -29,6 +29,28 @@ Apple Developer ID signing or notarization: if macOS blocks a trusted beta,
 allow this specific Codock app through **System Settings → Privacy & Security
 → Open Anyway**. Use the DMG matching your Mac's processor.
 
+## Install Codock Server
+
+For a new Ubuntu 24.04+ / Debian 12+ server with systemd (x64 or ARM64):
+
+```sh
+curl -fsSL https://github.com/co-dock/codock-download/releases/download/server-installer-v0.1.0/install.sh | sudo bash
+```
+
+The versioned bootstrap verifies the manager's signature. The manager verifies
+and installs the latest stable server, creates an unprivileged service account,
+sets up systemd and checks the authenticated API on `127.0.0.1:8765`.
+Reverse proxy, TLS, DNS and firewall configuration are separate.
+
+Use `sudo codock-server status`, `check`, `logs`, `backup`, `update` or `rollback`
+after installation. `sudo codock-server token` displays the connection token on
+an interactive console. Data and tokens are preserved; active work blocks an
+update. Rollback restores the binary, not database migrations. Existing manual
+installations are not taken over automatically.
+
+See the [installer release and guide](https://github.com/co-dock/codock-download/releases/tag/server-installer-v0.1.0)
+for parameters, offline installation and verification details.
+
 ## Verify a download
 
 Packages are signed with the dedicated Ed25519 key embedded in the clients.
